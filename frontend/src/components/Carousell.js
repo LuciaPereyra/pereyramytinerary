@@ -22,7 +22,7 @@ const Carousell = () => {
       },
       {
         src: "./assets/Calafate.jpg",
-        altText: 'El Calafate',
+        altText: 'The Calafate',
       },
       {
         src: "./assets/Cancun.jpg",

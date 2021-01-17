@@ -7,7 +7,7 @@ const Header = () => {
                     <Link to="/">
                         <div className="user" style={{
                             backgroundImage: `url("./assets/unknowfem.png")`,
-                            width: "100px", height: "100px"
+                            width: "50px", height: "50px"
                         }}></div>
                     </Link>
                     <nav>
