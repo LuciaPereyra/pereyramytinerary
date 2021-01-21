@@ -153,4 +153,30 @@ footer {
   width:100%;
 }
 
+div.cities {
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+div.city{
+  width: 40vw;
+  height: 50vh;
+}
+div.citiesImage{
+  width:90%;
+  margin: 0 auto;
+  background-position: center;
+  background-size: cover;
+  height: 40%;
+}
+div.citiesTitle, div.citiesButton{
+  height:10% ;
+  font-weight:bold;
+}
+
+
+
 /* END CSS */

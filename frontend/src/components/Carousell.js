@@ -22,7 +22,7 @@ const Carousell = () => {
       },
       {
         src: "./assets/Calafate.jpg",
-        altText: 'The Calafate',
+        altText: 'Calafate',
       },
       {
         src: "./assets/Cancun.jpg",
@@ -32,19 +32,19 @@ const Carousell = () => {
 
     [{
       src: "./assets/Berlin.jpg",
-      altText: 'Berlín',
+      altText: 'Berlin',
     },
     {
       src: "./assets/Atenas.jpg",
-      altText: 'Atenas',
+      altText: 'Athens',
     },
     {
       src: "./assets/Praga.jpg",
-      altText: 'Praga',
+      altText: 'Prague',
     },
     {
       src: "./assets/Estambul.jpg",
-      altText: 'Estambul',
+      altText: 'Istanbul',
     }
 
     ],
