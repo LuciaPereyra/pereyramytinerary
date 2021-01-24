@@ -45,12 +45,12 @@ export const Cities = () => {
             </div>
             <div className="contenedorCities">
                 {!alert ?
-                    resultsFilter.map(({ cityName, cityPic, _id }) => { // Mapeo array de objetos con información de cada ciudad
+                    resultsFilter.map(({ cityName, cityPic, _id}) => { // Mapeo array de objetos con información de cada ciudad
 
                         return (
                             <>
                                 <Link key={_id} className="cities" to={`/city/${_id}`} style={{ textDecoration: "none" }}>
-                                    <div className="citiesImage" style={{
+                                    <div  className="citiesImage" style={{
                                         backgroundImage: `url("${cityPic}")`
                                     }}><p className="citiesTitle">{cityName} </p>
 

@@ -190,7 +190,7 @@ div.citiesImage{
   margin: 2vw;
 }
 p.citiesTitle, p.cityTitle{
-  height:8% ;
+  height:8%;
   font-weight:600px;
   font-size: 28px;
   background-color: rgba(0, 0, 0, 0.56);
@@ -229,8 +229,6 @@ div.alert {
   filter: alpha(opacity=80);
   width: 100vw;
   padding: 0 !important;
-
-
 }
 div.alertTitle p{
     display: flex;
@@ -253,8 +251,9 @@ div.alertTitle p{
   display: inline-block;
   text-align: center;
   font-size: 25px;
-  border-color: #DD9B3C;
   border-style:double;
+  border: 4px solid #DD9B3C;
+  margin-top:3vh;
   
 }
 
