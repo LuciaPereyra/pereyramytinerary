@@ -1,26 +1,44 @@
 import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 
 export const Itineraries = (props) => {
     const [itinerary, setItinerary] = useState({}) // mi estado inicia en un objeto vacío
-
+    console.log(itinerary)
 
     useEffect(() => {
-        const id = parseInt(props.match.params.id) // captura id que le pasan por url (cuando hacen click en la foto)
+        const id = props.match.params.id // captura id que le pasan por url (cuando hacen click en la foto)
         fetch("http://localhost:4000/api/city/" + id)
             .then(response => response.json())
             .then(data => setItinerary(data.respuesta))
-
+            .catch(error => console.log(error))
     }, [])
 
     return (
-        <div>
-            <h1>Oops! we don't have itineraries to show yet</h1>
-            <h1>{itinerary.cityName}</h1>
-            <img src={itinerary.cityPic} style={{
-                width: "40vw", height: "30vh"
-            }} alt="" />
-        </div>
+        <section className="section" style={{
+            backgroundImage: `url("../assets/fondoacua.jpg")`
+        }}>
+            <div className="contenedorCity">
+                <div className="cityImage" style={{
+                    backgroundImage: `url("${itinerary.cityPic}")`                    
+                }}><p className="cityTitle">{itinerary.cityName}</p>
+
+
+                </div>
+                <div className="alert" style={{
+                    backgroundImage: `url("../assets/fondoHuellas.jpg"`,
+                    width: "40vw", height: "40vh"
+                }}>
+                    {!itinerary.cityActivity && (
+                        <div className="alertTitle"> <p >Oops! we don't have itineraries to show yet</p> </div>
+                    )}
+                </div>
+                <Link className="linkItineraries" to="/cities"
+                    style={{ textDecoration: "none" }}> <img src="../assets/Arrowleft.png" alt="" />Go to Cities!
+
+                </Link>
+            </div>
+        </section>
     )
 }
 

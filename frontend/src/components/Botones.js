@@ -8,6 +8,7 @@ const Botones = () => {
                     style={{ textDecoration: "none" }}>Go to travel!
                     <img src="./assets/flecha1.png" alt="" />
                 </Link>
+             
             </div>
         </>
     )

@@ -10,7 +10,7 @@ const Home = () => {
                     width: "100%", height: "600px"
                 }}>
                     <div className="logo" style={{
-                        backgroundImage: `url("./assets/logoblanmytinerary.png" )`,
+                        backgroundImage: `url("./assets/logomytinerary1.png" )`,
                         width: "550px", height: "250px"
                     }}></div>
 

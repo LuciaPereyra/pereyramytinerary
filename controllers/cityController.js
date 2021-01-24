@@ -1,48 +1,41 @@
-const data = [ // este es mi array de objetos con las propiedades y valor de cada ciudad
-    {
-        _id: 1,
-        cityName: "Istanbul",
-        cityPic: "/assets/Estambul.jpg"
-    },
-    {
-        _id: 2,
-        cityName: "Rio de Janeiro",
-        cityPic: "/assets/Riodejaneiro.jpg"
-    },
-    {
-        _id: 3,
-        cityName: "Prague",
-        cityPic: "/assets/Praga.jpg"
-    },
-    {
-        _id: 4,
-        cityName: "Sydney",
-        cityPic: "/assets/Sydney.jpeg"
-    },
-]
+const City = require("../models/City")
 
 const cityController = {
     // devolver al front todas las cities
-    allCities: (req, res) => { // ruta del backend, se modifica en fetch 
+    addCity: (req, res) => {
+        // creo nueva instancia de mi modelo 
+        const cityAAgregar = new City({
+            cityName: req.body.cityName,
+            cityPic: req.body.cityPic
+        })
+        cityAAgregar.save()
+            .then(cityAAgregar => {
+                return res.json({ success: true, response: cityAAgregar })
+            })
+            .catch(error => {
+                return res.json({ success: false, response: error })
+            })
+
+    },
+
+    allCities: async (req, res) => {
         // devolver al frontend la lista de todas las ciudades, la info vendrá de una base de datos
+        const data = await City.find()
         res.json({
             respuesta: data
 
-        }) // este es el controlador, con una función de colvald que recibe dos parametros: request y response. el back responderá con archivo.json "bienvenido"
+        })
     },
 
-
-    singleCity: (req, res) => { // devolverá id dinámico, no es el mismo id que en frontend 
-        // capturo id que viene en el endopoint al cual me estan pegando 
+    singleCity: async (req, res) => {
         // devolver al front solo la city que me piden por ID
-        const id = parseInt(req.params.id)
-        data.map(info => {
-            if (info._id === id) {
-                res.json({
-                    respuesta: info
-                })
-            }
-        })
+        const id = req.params.id
+        const capturoId = await City.findById(id)
+        try {
+            res.json({ success: true, respuesta: capturoId })
+        } catch (error) {
+            alert("En este momento no podemos procesar la información")
+        }
     }
 }
 module.exports = cityController
