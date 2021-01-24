@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 
-export const Itineraries = (props) => {
+export const Itineraries = (props) => { // props URL 
     const [itinerary, setItinerary] = useState({}) // mi estado inicia en un objeto vacío
     console.log(itinerary)
 
@@ -34,7 +34,7 @@ export const Itineraries = (props) => {
                     )}
                 </div>
                 <Link className="linkItineraries" to="/cities"
-                    style={{ textDecoration: "none" }}> <img src="../assets/Arrowleft.png" alt="" />Go to Cities!
+                    style={{ textDecoration: "none" }}> <img src="../assets/Arrowleft.png" alt="" />Back to Cities!
 
                 </Link>
             </div>

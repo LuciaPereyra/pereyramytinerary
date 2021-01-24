@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 
 export const Cities = () => {
     const [cities, setCities] = useState([]) // se carga el componente, se monta, inicia con var cities en un array vacío
-    const [citiesFilter, setCitiesFilter] = useState("") // searchFilter guarda busqueda en cada ocurrencia del evento onchange
+    const [citiesFilter, setCitiesFilter] = useState("") 
     const [resultsFilter, setResultsFilter] = useState([])
     const [alert, setAlert] = useState(false)
 
@@ -22,14 +22,16 @@ export const Cities = () => {
 
     useEffect(() => {
         const resultEnd = cities.filter(city => city.cityName.toLowerCase().indexOf(citiesFilter.toLowerCase().trim()) === 0)
+        // guardo filtro en cities, comparando en cada vuelta la DB con lo ingresado por input, primer ocurrencia pasando todo a minusculas, sin espacios
 
         setResultsFilter(resultEnd)
         resultEnd.length === 0 ? setAlert(true) : setAlert(false)
+        // modifico estado de var Alert, en base al resultado del filtro, si es 0 true, sino false y renderiza mensaje Alert
 
 
     }, [cities, citiesFilter])
 
-    const search = e => { // acá capturo el evento y modifico el estado de searchFilter
+    const search = e => { // acá capturo el evento y modifico el estado de citiesFilter
         setCitiesFilter(e.target.value)
     }
 
