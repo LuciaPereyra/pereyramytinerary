@@ -86,23 +86,27 @@ nav p {
   color: #DD9B3C;
   margin-left: 1vw;
   font-weight: 700;
-  font-size: 50px;
+  font-size: 35px;
   border-radius: 30px;
   box-shadow: -8px  3px 10px rgba(65, 64, 64, 0.658);
+  padding:0.7vw;
 }
-.linkItineraries{
+.linkItineraries {
   display: flex;
   justify-content: center;
   align-items: center;
   color: #DD9B3C;
   margin-left: 1vw;
   font-weight: 700;
-  font-size: 50px;
+  font-size: 20px;
   border-radius: 30px;
   box-shadow: -8px  3px 10px rgba(65, 64, 64, 0.658);
-  margin: 3vw;
+  margin: 1vw;
   padding: 0.2vw; 
   background-color: blanchedalmond;
+}
+.linkItineraries img{
+  width: 4vw;
 }
 
 .contenedorBoton{
@@ -111,7 +115,7 @@ nav p {
   justify-content: center;
   flex-direction: column;
   background-color: #3eb3ed36; 
-  padding: 0.2vw; 
+  padding: 0.6vw; 
 }
 .tituloPopular {
   background-position: center;

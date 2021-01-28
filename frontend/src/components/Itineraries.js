@@ -35,7 +35,6 @@ export const Itineraries = (props) => { // props URL
                 </div>
                 <Link className="linkItineraries" to="/cities"
                     style={{ textDecoration: "none" }}> <img src="../assets/Arrowleft.png" alt="" />Back to Cities!
-
                 </Link>
             </div>
         </section>
