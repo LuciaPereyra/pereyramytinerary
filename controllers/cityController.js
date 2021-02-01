@@ -34,7 +34,7 @@ const cityController = {
         try {
             res.json({ success: true, respuesta: capturoId })
         } catch (error) {
-            alert("En este momento no podemos procesar la información")
+            return res.json({ success: false, response: error })
         }
     }
 }

@@ -1,40 +1,29 @@
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
+import { connect } from "react-redux"
+import citiesActions from "../redux/actions/citiesActions"
 
-
-
-export const Cities = () => {
-    const [cities, setCities] = useState([]) // se carga el componente, se monta, inicia con var cities en un array vacío
-    const [citiesFilter, setCitiesFilter] = useState("") 
-    const [resultsFilter, setResultsFilter] = useState([])
-    const [alert, setAlert] = useState(false)
+export const Cities = (props) => {
 
     useEffect(() => { // las hooks fetchean el backend, éste contesta con la info de la base de datos
-        fetch("http://localhost:4000/api/cities") //  fetchea mi backend
-            .then(response => response.json()) // recibo rta y la convierto a objeto js
-            .then(data => {
-                setCities(data.respuesta)
-                setResultsFilter(data.respuesta)
-
-            })
+        props.allCities()
     }, [])
 
-
-    useEffect(() => {
-        const resultEnd = cities.filter(city => city.cityName.toLowerCase().indexOf(citiesFilter.toLowerCase().trim()) === 0)
-        // guardo filtro en cities, comparando en cada vuelta la DB con lo ingresado por input, primer ocurrencia pasando todo a minusculas, sin espacios
-
-        setResultsFilter(resultEnd)
-        resultEnd.length === 0 ? setAlert(true) : setAlert(false)
-        // modifico estado de var Alert, en base al resultado del filtro, si es 0 true, sino false y renderiza mensaje Alert
-
-
-    }, [cities, citiesFilter])
-
     const search = e => { // acá capturo el evento y modifico el estado de citiesFilter
-        setCitiesFilter(e.target.value)
+        props.filtro(e.target.value)
     }
 
+    if (props.citiesFiltradas.length === 0) {
+        return (
+            <Link to={`/cities`} style={{ textDecoration: "none" }}> 
+            <div className="alert" style={{
+                backgroundImage: `url("../assets/fondoHuellas.jpg"`,
+                width: "40vw", height: "60vh"
+            }}>
+                <div className="alertTitle"><p>Oops! we still haven't traveled to that city</p></div>
+            </div> </Link>
+        )
+    }
     return (
 
         <section className="section" className="section" style={{
@@ -44,36 +33,38 @@ export const Cities = () => {
                 <input onChange={search} type="text" placeholder="Search City" ></input>
             </div>
             <div className="contenedorCities">
-                {!alert ?
-                    resultsFilter.map(({ cityName, cityPic, _id}) => { // Mapeo array de objetos con información de cada ciudad
-
-                        return (
-                            <>
-                                <Link key={_id} className="cities" to={`/city/${_id}`} style={{ textDecoration: "none" }}>
-                                    <div  className="citiesImage" style={{
-                                        backgroundImage: `url("${cityPic}")`
-                                    }}><p className="citiesTitle">{cityName} </p>
-
-                                    </div>
-                                </Link>
-                            </>
-                        )
-                    })
-
-                    : <div className="alert" style={{
-                        backgroundImage: `url("../assets/fondoHuellas.jpg"`,
-                        width: "40vw", height: "60vh"
-                    }}><div className="alertTitle"><p>Oops! we still haven't traveled to that city</p></div>
-                    </div>
-                }
-
+                {props.citiesFiltradas.map(({ cityName, cityPic, _id }) => { // Mapeo array de objetos con información de cada ciudad                      
+                    return (
+                    
+                            <Link key={_id} className="cities" to={`/city/${_id}`} style={{ textDecoration: "none" }}>
+                                <div  className="citiesImage" style={{
+                                    backgroundImage: `url("${cityPic}")`
+                                }}><p className="citiesTitle">{cityName} </p>
+                                </div>
+                            </Link>
+                    
+                    )
+                })}
             </div>
         </section>
     )
 }
 
+const mapStateToProps = state => {
+    // objeto con las propiedades que reciben las props del state (reducer)
+    return {
+        listaCities: state.cities.listaCities,
+        citiesFiltradas: state.cities.citiesFiltradas
+    }
+}
+const mapDispatchToProps = {
+    //objeto con las propiedades que reciben las props de las funciones en action 
+    allCities: citiesActions.allCities,
+    filtro: citiesActions.filter
+}
 
-export default Cities
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cities)
 
 
 
