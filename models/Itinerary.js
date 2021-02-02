@@ -10,10 +10,10 @@ const itinerarySchema = new mongoose.Schema({
     price: {type:"Number", required:true},    
     hashtag: {type:"Array", required:true},
     
-    activities:[
-        {activityImage:{type:"String", required:true}}, 
-        {activityTitle:{type:"string", required:true}}
-        ],
+    activities:[{ 
+        activityImage:{type:"String", required:true}, 
+        activityTitle:{type:"String", required:true}
+    }],
  
     comments:[
         {userPic:{type:"String", required:false}},

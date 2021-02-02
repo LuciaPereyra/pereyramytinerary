@@ -12,10 +12,11 @@ export const City = (props) => { // props URL
     useEffect(() => {
         const id = props.match.params.id// captura id que le pasan por url (cuando hacen click en la foto)
         const cityFind = props.listaCities.find(item => item._id === id)
-        setcity(cityFind)
+        setcity(cityFind) 
         props.itinerariesById(id)
-
     }, [props])
+
+
 
     return (
         <section className="section" style={{
@@ -26,7 +27,7 @@ export const City = (props) => { // props URL
                     backgroundImage: `url("${city.cityPic}")`
                 }}><p className="cityTitle">{city.cityName}</p>
                 </div>
-                <div><h3>Available MYtineraries: </h3></div>
+                <h5 className="titleAvailable">Available MYtineraries: </h5>
 
                 {(props.listItineraries.length === 0) ?
 
@@ -37,13 +38,13 @@ export const City = (props) => { // props URL
                     </div>
 
                     : <div className="itinerary">
-                        {props.listItineraries.map(itineraries => <Itinerary itineraries={itineraries} />)}
-                      
+                        {props.listItineraries.map(itineraries => <Itinerary key={itineraries._id}itineraries={itineraries} />)}
+
                     </div>
                 }
-              
+
                 <Link className="linkItineraries" to="/cities"
-                    style={{ textDecoration: "none" }}> <img src="../assets/Arrowleft.png" alt="" />Back to Cities!
+                    style={{ textDecoration: "none" }}> <img src="../assets/Arrowleft.png" alt=""/>Back to Cities!
                 </Link>
             </div>
         </section>
