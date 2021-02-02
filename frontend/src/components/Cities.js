@@ -12,10 +12,6 @@ export const Cities = (props) => {
     const search = e => { // acá capturo el evento y modifico el estado de citiesFilter
         props.filtro(e.target.value)
     }
-// if(props.citiesFiltradas.length !== 0){
-//        setLoading(true)
-
-//     }
 
     return (
 

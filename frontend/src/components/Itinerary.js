@@ -1,4 +1,5 @@
-import { connect } from "react-redux"
+// componente Itinerario, renderizo info itinerario.
+// por Props de su padre city le llega la lista de itinerario relacionado por ID city
 
 import React, { useEffect, useState } from "react"
 
