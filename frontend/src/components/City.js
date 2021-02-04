@@ -14,7 +14,7 @@ export const City = (props) => { // props URL
         const cityFind = props.listaCities.find(item => item._id === id)
         setcity(cityFind) 
         props.itinerariesById(id)
-    }, [props])
+    }, [])
 
 
 

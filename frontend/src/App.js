@@ -6,6 +6,8 @@ import Footer from "./components/Footer"
 import City from "./components/City"
 import './App.css';
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
+import LogIn from "./components/LogIn";
+import Register from "./components/Register";
 
 const App = () => {
 
@@ -16,10 +18,12 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/home" component={Home} />
-          <Route path="/cities" component={Cities} />
-          <Route path="/city/:id" component={City} />
+          <Route exact path="/" component={Home}/>
+          <Route path="/home" component={Home}/>
+          <Route path="/cities" component={Cities}/>
+          <Route path="/city/:id" component={City}/>
+          <Route path="/login" component={LogIn}/>
+          <Route path="/signup" component={Register}/>
           <Redirect to="/" />
         </Switch>
         <Footer />

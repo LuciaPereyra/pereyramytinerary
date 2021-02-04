@@ -5,7 +5,8 @@ import citiesActions from "../redux/actions/citiesActions"
 
 export const Cities = (props) => {
 
-    useEffect(() => { // las hooks fetchean el backend, éste contesta con la info de la base de datos
+    useEffect(() => { // hooks equiv func a componenteDidMount/DidUpdate y WillUnmount en comp de clase
+        // función que se ejecuta cuando el componente se monta y cada vez que se actualiza
         props.allCities()
     }, [])
 

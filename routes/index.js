@@ -2,6 +2,8 @@ const express = require("express")
 const router = express.Router()
 const cityController = require("../controllers/cityController")
 const itineraryController = require("../controllers/itineraryController")
+const userController = require("../controllers/userController")
+const validator = require("../controllers/validator")
 
 
 router.route("/cities") 
@@ -18,9 +20,18 @@ router.route("/itinerary")
 router.route("/itinerary/:id")
 .get(itineraryController.itinerariesById)
 
+router.route("/user/signup")
+.post(validator.validate, userController.signUp)
+
+router.route("/user/login")
+.post(userController.logIn)
+
 
 
 
 
 
 module.exports = router 
+
+// Método GET, es un pedido, lleva los datos de forma "visible" al navegador web (cliente) por medio de la URL.
+// Método POST, responde al pedido de forma "oculta" (el cliente no lo puede ver) en base a lo que responde el controlador de origen. 

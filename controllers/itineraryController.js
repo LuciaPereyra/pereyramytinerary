@@ -32,7 +32,7 @@ const itineraryController={
 
     itinerariesById: async (req, res) => {
         // devolver al front solo la el itinerario que me piden por ID
-       const id = req.params.id
+      
        Itinerary.find({cityId:id}).populate("cityId")
       .then(itinerary=> res.json({success:true, respuesta:itinerary}))
       .catch(error=>res.json({success:false, error}))

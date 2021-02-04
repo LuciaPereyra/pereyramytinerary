@@ -4,7 +4,7 @@ const Header = () => {
         <>
             <header>
                 <div className="header">
-                    <Link to="/">
+                    <Link to="/login">
                         <div className="user" style={{
                             backgroundImage: `url("./assets/unknowfem.png")`,
                             width: "50px", height: "50px"
