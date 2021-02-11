@@ -4,6 +4,8 @@ const cityController = require("../controllers/cityController")
 const itineraryController = require("../controllers/itineraryController")
 const userController = require("../controllers/userController")
 const validator = require("../controllers/validator")
+const passport = require("passport")
+require("../config/passport")
 
 
 router.route("/cities") 
@@ -16,15 +18,24 @@ router.route("/city/:id")
 router.route("/itinerary")
 .get(itineraryController.allItineraries)
 .post(itineraryController.addItinerary)
+.put(passport.authenticate("jwt",{session:false}),itineraryController.postComment)
 
 router.route("/itinerary/:id")
 .get(itineraryController.itinerariesById)
+.post(itineraryController.itinerariesById)
 
 router.route("/user/signup")
-.post(validator.validate, userController.signUp)
+.post(validator.validUserNew, userController.signUp)
 
 router.route("/user/login")
 .post(userController.logIn)
+
+router.route('/itinerary/like/:itineraryid')
+.post(passport.authenticate("jwt",{session:false}),itineraryController.addFav)
+
+router.route('/itinerary/unlike/:itineraryid')
+.post(passport.authenticate("jwt",{session:false}),itineraryController.modifyFav)
+
 
 
 

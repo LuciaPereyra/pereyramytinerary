@@ -1,31 +1,35 @@
+const Joi = require("joi")
+
 const validator = {
-    validate: (req, res, next) => {
-        var errores= []
-        const { userName, firstName, email, password} = req.body
-        if (firstName === "" || email === "" || password === "" || userName ==="") {
-            errores.push("Los campos con (*) son obligatorios")
-        }
-        if (userName.split("@").length !== 2) {
-            // valido que el mail tenga dos partes
-            errores.push("El mail es incorrecto")
-        }
-        if (userName.split("@")[1].split(".").length < 2 || userName.split("@")[1].split(".").length > 3) {
-            errores.push("El mail esta incorrecto") 
-            //divido userName por @ y le digo: la segunda parte ([indice 1]) split por un (".") si hay uno (menos de 2) quiere decir que no hay punto
-            // valido que la segunda parte de lo que divide el arroba tenga dos partes o tres pero nunca una o más de tres
-        }
-        if (password.length < 6){
-            // valido que el pass tenga una length mínima de 6
-           errores.push("El password debe contener como mín 6 caracteres") 
-        }
-    
-        if (errores.length > 0) {
-            res.json({succes: false, error})
-        }else {
-            next()
-        }
-        
+    validUserNew: (req, res, next) => {
+        const schema = Joi.object({
+            userName: Joi.string().trim().required().email({ tlds: {allow: false} }),
+            firstName: Joi.string().trim().required().min(2).max(10),
+            lastName: Joi.string().trim().required().min(2).max(10),
+            email: Joi.string().trim().required().email({minDomainSegments: 1, tlds: {allow: false} }),
+            password: Joi.string().trim().required(), // PASS: LMAYUSC, LMINUSC,N0-9,3,8CARAC
+            urlPic: Joi.string().uri().required(),
+            country: Joi.string().required()
+        })
+
+        const validation = schema.validate(req.body, {abortEarly:false})
+        // .pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{3,8}$/)
+
+        //const validation es mi validator, valida el nuevo usuario para evitar duplicados basado en mi schema de Joi, en req.body llegan los campos necesarios a validar
+        // abortEarly: false le decimos que ignore el primer false y continúe evaluando, de lo contrario se quedaría en el primer campo, sin saber si el resto tiene errores
+        // validation, genera un objeto con propiedad value (nuevo usuario), prop error (si hay errores) prop details (detalla errores)
+ 
+     
+        // hay que razonar cómo mostrar errores personalizados en FE 
+       
+        if (!validation.error) {
+            next() // se indica next para que diga al controlador si todo ok
+            
+         }else {
+            res.json({succes: false, errores: validation.error})
+           
     }
+}
     
 
 

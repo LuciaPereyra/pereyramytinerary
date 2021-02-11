@@ -31,13 +31,36 @@ const itineraryController={
         },
 
     itinerariesById: async (req, res) => {
-        // devolver al front solo la el itinerario que me piden por ID
-      
-       Itinerary.find({cityId:id}).populate("cityId")
+        // devolver al front solo el itinerario que me piden por ID
+        const id = req.params.id
+      await Itinerary.find({cityId:id}).populate("cityId")
       .then(itinerary=> res.json({success:true, respuesta:itinerary}))
       .catch(error=>res.json({success:false, error}))
-    }
+    },
+    
+    addFav: (req, res) => {
+        const id = req.params.id
+        Itinerary.findOneAndUpdate({ _id: id }, { $addToSet: { likes: req.user._id } })
+          .then(data => res.json({ success: true, response: data }))
+          .catch(error => res.json({ success: false, error }))
+      },
+    
+      modifyFav: (req, res) => {
+        const id = req.params.id
+        Itinerary.findOneAndUpdate({ _id: id }, { $pull: { likes: req.user._id } })
+          .then(data => res.json({ success: true, response: data }))
+          .catch(error => res.json({ success: false, error }))
+      },
 
+      postComment: async (req,res) => {
+        const {id} = req.body // capturo id de itinerario por la url
+        const {comment}= req.body
+        const {user}=req
+        await Itinerary.findOneAndUpdate({_id:id},{$push:{'comments':{userName:user.userName,userPic:user.urlPic,comments:comment}}},{new:true})
+       .then(comentarioagregado=> res.json({success: true, response:comentarioagregado}))
+       .catch(error =>res.json({success:false, error}))
+
+    },
      
 
 

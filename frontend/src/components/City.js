@@ -7,12 +7,12 @@ import itineraryActions from "../redux/actions/itineraryActions"
 
 export const City = (props) => { // props URL 
 
-    const [city, setcity] = useState([])
+    const [city, setCity] = useState([])
+    const id = props.match.params.id// captura id que le pasan por url (cuando hacen click en la foto)
 
     useEffect(() => {
-        const id = props.match.params.id// captura id que le pasan por url (cuando hacen click en la foto)
         const cityFind = props.listaCities.find(item => item._id === id)
-        setcity(cityFind) 
+        setCity(cityFind) 
         props.itinerariesById(id)
     }, [])
 
@@ -38,7 +38,7 @@ export const City = (props) => { // props URL
                     </div>
 
                     : <div className="itinerary">
-                        {props.listItineraries.map(itineraries => <Itinerary key={itineraries._id}itineraries={itineraries} />)}
+                        {props.listItineraries.map(itineraries => <Itinerary key={itineraries._id}itineraries={itineraries} id={id} />)}
 
                     </div>
                 }

@@ -16,15 +16,11 @@ export const Cities = (props) => {
 
     return (
 
-        <section className="section" className="section" style={{
-            backgroundImage: `url("../assets/fondoacua.jpg")`
-        }}>
+        <section>
             <div className="filter">
                 <input onChange={search} type="text" placeholder="Search City" ></input>
             </div>
-
-            { props.citiesFiltradas.length === 0 ?
-
+            {props.citiesFiltradas.length === 0 ?
                 <Link to={`/`} style={{ textDecoration: "none" }}>
                     <div className="alert" style={{
                         backgroundImage: `url("../assets/fondoHuellas.jpg"`,

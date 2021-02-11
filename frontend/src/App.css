@@ -269,7 +269,7 @@ div.alertTitle p{
   border-style:double;
   border: 4px solid #DD9B3C;
   margin-top:3vh;
-  
+  background-color: #3eb3ed36; 
 }
 
 /* FOOTER´S ELEMENTS */
@@ -403,6 +403,7 @@ div.section {
   background-size: cover;
   background-repeat: no-repeat;
   margin: 2vw;
+  width: 100%;
 }
 .actiImg p {
   height:10%;
@@ -411,10 +412,26 @@ div.section {
   background-color: rgba(0, 0, 0, 0.86);
   color: blanchedalmond;
   text-align: center;
-  width: 100%;
   border-radius: 2%;
   margin-bottom: 0 !important;
+  width: 100%;
 
+}
+.containerActi{
+  display: flex;
+  flex-wrap: wrap ;
+  width: 75vw;
+  align-items: center;
+  justify-content: center;
+
+}
+.comments{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  
 }
 button {
   background: none;
@@ -434,10 +451,15 @@ button {
 button:focus {
   outline: none;
 }
-.containerActi{
-  display: flex;
 
+.form {
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 10vw;
 }
+
 
 
 
