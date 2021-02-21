@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import authActions from "../redux/actions/authActions"
 import GoogleLogin from 'react-google-login'
 
-const LogIn = (props) => {
+const LogIn = ({loginUser}) => {
     const [logueo, setLogueo] = useState({})
     const [err, setErr] = useState([])
 
@@ -25,15 +25,14 @@ const LogIn = (props) => {
             alert("Completar todos los campos con (*)")
             return false
         }
-
         setErr([])
-
-        const responseBE = await props.loginUser(logueo)
+        const responseBe = await loginUser(logueo)
         // paso la nueva cuenta a través de la función registerUser que despacha mi userAction
-        if (responseBE && !responseBE.success) {
-            setErr([responseBE.mensaje])
+        if (responseBe && !responseBe.success) {
+            setErr([responseBe.mensaje])
         } else {
             alert("Bienvenido/a" + " " + logueo.userName)
+       
         }
 
     }
@@ -41,13 +40,13 @@ const LogIn = (props) => {
         if (response.error) {
             alert("Hubo un error con la autenticación en Google")
         } else {
-            const responseBE = await props.loginUser({
+            const responseBe = await loginUser({
                 userName: response.profileObj.email,
                 password: response.profileObj.googleId,
             })
 
-            if (responseBE && !responseBE.success) {
-                setErr([responseBE.mensaje])
+            if (responseBe && !responseBe.success) {
+                setErr([responseBe.mensaje])
             } else {
                 alert("Bienvenido/a ")
             }

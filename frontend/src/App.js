@@ -14,8 +14,8 @@ import authActions from "./redux/actions/authActions"
 // condicional para evaluar si hay usuario logueado ve todo excepto login y register, sino, ve todo y además puede acceder a login y register
 // con esto protegemos rutas a nivel frontend
 
-const App = (props) => {
-  if (props.usuarioLogueado) {
+const App = ({usuarioLogueado,logLocalStorage}) => {
+  if (usuarioLogueado) {
     var routes =
       <Switch>
         <Route exact path="/" component={Home} />
@@ -25,7 +25,7 @@ const App = (props) => {
         <Redirect to="/" />
       </Switch>
   } else if(localStorage.getItem("token")){
-    props.logLocalStorage(localStorage.getItem("userName"),localStorage.getItem("picture"),localStorage.getItem("token"))
+    logLocalStorage(localStorage.getItem("firstName"),localStorage.getItem("urlPic"),localStorage.getItem("token"))
 
   }else{
     var routes =

@@ -1,3 +1,4 @@
+
 // componente Itinerario, renderizo info itinerario.
 // por Props de su padre city le llega la lista de itinerario relacionado por ID city
 import Comment from "./Comment"
@@ -24,7 +25,7 @@ const Itinerary = (props) => {
         <div className="containerItinerary">
             <div className="containerImg">
                 <div className="userImg" style={{
-                    backgroundImage: `url("${props.itineraries.userPic}")`, width: "12vw", height: "12vh"
+                    backgroundImage: `url("${props.itineraries.userPic}")`
                 }}> </div>{props.itineraries.userName}</div>
             <div className="containerTextItin">
                 <div className="itinTitle">{props.itineraries.title}</div>
@@ -33,9 +34,9 @@ const Itinerary = (props) => {
 
                     {props.usuarioRegistrado
                         ? props.itineraries.likes.find(userLike => userLike === props.usuarioRegistrado.id)
-                            ? <p><i onClick={sumaLike} className="fas fa-heart"></i>{props.itineraries.likes}</p>
-                            : <p><i onClick={restaLike} className="far fa-heart"></i>{props.itineraries.likes}</p>
-                            : <p><i onClick={() => alert("Debes loguearte para favear")} className="far fa-heart"></i>{props.itineraries.likes}</p>
+                            ? <div><i onClick={sumaLike} className="fas fa-heart"></i>{props.itineraries.likes}</div>
+                            : <div><i onClick={restaLike} className="far fa-heart"></i>{props.itineraries.likes}</div>
+                            : <div><i onClick={() => alert("Debes loguearte para favear")} className="far fa-heart"></i>{props.itineraries.likes}</div>
                         }
                       
                     <div>Hours: {(props.itineraries.hours)}</div>
@@ -53,7 +54,7 @@ const Itinerary = (props) => {
                             {props.itineraries.activities.map(item => {
                                 return (
                                     <div key={item._id} className="actiImg" style={{
-                                        backgroundImage: `url("${item.activityImage}")`, width: "20vw", height: "33vh"
+                                        backgroundImage: `url("${item.activityImage}")`,
                                     }}><p>{item.activityTitle}</p></div>
                                 )
                             })}

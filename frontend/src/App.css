@@ -29,27 +29,32 @@ div.header {
 .user {
   background-position: center;
   background-size: cover;
-  margin-left: 3vw;
   border-radius: 60% 60%;
-  margin: 1vw;
+  /* margin: 1vw; */
   margin-left: 3vw;
+  width: 4vw;
+  height: 6vh;
 }
-nav {
+.contenedorUser {
   display: flex;
   justify-content: center;
-  margin-right: 5vw;
+  align-items: center;
+  font-weight: 700;
+  font-size: 20px;
+}
+.menuNav {
+  display: flex;
+  justify-content: center;
   font-weight: 700;
   font-size: 20px;
   display: inline block;
   
 }
 nav p {
-  
   text-align: center;
   height: 0 auto;
   font-size: 20px;
   margin: 1vw; 
-  width: 100%;
   color: rgb(8, 8, 8);
 }
 
@@ -63,6 +68,8 @@ nav p {
   background-repeat:no-repeat ;
   background-size:cover;
   box-shadow: -2px 3px 50px rgba(65, 64, 64, 0.39);
+  width: 100vw;
+  height: 60vh
 }
 .logo { 
   display: flex;
@@ -73,6 +80,8 @@ nav p {
   box-shadow: 3px 3px 50px rgba(65, 64, 64, 0.86);
   margin-top: 10vh;
   border-radius: 21% 10%;
+  width: 100vw;
+  height: 40vh
   }
 .flecha img {
   display: flex;
@@ -122,7 +131,8 @@ nav p {
   background-position: center;
   background-size: cover;
   box-shadow: -2px 10px 50px rgba(90, 90, 90, 0.452);
-
+  width: 100vw; 
+  height: 30vh
 }
 
 /* CARROUSEL */
@@ -137,7 +147,7 @@ nav p {
   padding: 2vw;
 
 }
-.cajaCarousel{
+.cajaCarousel {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,6 +156,8 @@ nav p {
   background-size: cover;
   box-shadow: 1px 3px 10px rgb(90, 90, 90);
   border-radius: 3%;
+  width: 38vw;
+  height: 40vh
 }
 .cajaCarousel p {
   font-size: 20px;
@@ -312,6 +324,7 @@ div.section {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  text-align: center;
   flex-direction: column;
 }
 
@@ -331,13 +344,13 @@ div.section {
 }
 
 .userImg {
-  justify-content: space-evenly;
-  flex-direction: column;
   border-radius: 5vw 5vh;
   background-position: top;
   background-size: cover;
   background-repeat: no-repeat;
   margin: 2vh;
+  width: 12vw;
+  height: 12vh
 }
 
 .containerTextItin {
@@ -357,8 +370,6 @@ div.section {
   width:100%;
   border-radius: 3px;
   box-shadow:3px 3px 50px black;
-
-
 }
 .itinLikes div {
   display: flex;
@@ -374,7 +385,6 @@ div.section {
   width:90%;
   margin-bottom: 2vh;
   margin-top:2vw;
-
 }
 .activities {
   display: flex;
@@ -404,6 +414,8 @@ div.section {
   background-repeat: no-repeat;
   margin: 2vw;
   width: 100%;
+  width: 20vw;
+  height: 33vh
 }
 .actiImg p {
   height:10%;
@@ -460,6 +472,169 @@ button:focus {
   margin-left: 10vw;
 }
 
+/* MEDIA QUERY 320-480px */
+
+@media only screen and (min-width:320px) and (max-width:480px) {
+  div.header {
+    height: 6vh;
+  }
+  .user {
+    min-width: 10vw;
+    max-height: 5vh;
+    border-radius: 20% 20%;
+  }
+  .contenedorUser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  nav p {
+    font-size: 15px;
+    margin: 1vw;
+    margin-right: 3vw;
+  }
+  .imgSection{
+    max-width: 100vw;
+    max-height: 40vh
+  }
+  .logo { 
+    margin-top: 5vh;
+    border-radius: 9% 15%;
+    background-position: center;
+    background-size: cover;
+    min-width: 80vw;
+    max-height: 20vh
+  }
+  .contenedorBoton{
+    padding: 0.8vw; 
+  }
+  .flecha img {
+    width: 6vw;
+  }
+  .linkFlecha {
+    font-size: 23px;
+    padding: 0.2vw;
+    margin-top: 3vw;
+  }
+  .tituloPopular {
+    width: 100vw; 
+    height: 20vh
+  
+  }
+  
+/* CARROUSEL */
+  .cajaCarousel {
+    border-radius: 3%;
+    width: 45vw;
+    height: 15vh
+  }
+  .cajaCarousel p {
+    font-size: 15px;
+    width: 100%;
+    height: 20%;
+  }
+  span.carousel-control-next-icon, span.carousel-control-prev-icon {
+    filter: invert(100%) !important;
+  }
+  /*CITIES*/
+  div.citiesImage{
+    width:90vw;
+    height: 30vh;
+    border-radius: 2%;
+    margin: 2vw;
+  }
+  /*CITY*/
+  .cityImage {
+    height: 30vh;
+    width:95vw;
+  }
+  .titleAvailable {
+    border-radius: 10px;
+    margin-top: 2vh;
+    width: 100%;
+    padding: 3px;
+    font-size: 13px;
+  }
+  .linkItineraries {
+    font-size: 13px;
+    margin: 1vw;
+    padding: 0.4vw; 
+  }
+  .linkItineraries img{
+    width: 4vw;
+  }
+
+  /*ITINERARY*/
+  .containerItinerary {
+    width: 95vw;
+    font-size: 12px;
+    margin:2vw;
+    border-radius: 10px;
+  }
+  .itinTitle {
+    font-size: 15px;
+    margin-top: 3vw;
+    width:100%;
+  }
+  .containerImg {
+    width: 23%;
+    font-size: 10px;
+  }
+  .userImg {
+    border-radius: 12vw 12vh;
+    min-width: 20vw;
+    min-height: 12vh;
+    margin: 1vh;
+    margin-bottom:1vw
+  }
+  .containerTextItin {
+    width: 75%;
+  }
+  .itinLikes div {
+    min-width: 100%;
+    font-size: 11px;
+    margin: 3vw;
+  }
+  .itinhashtag {
+    width:100%;
+    margin-bottom: 2vh;
+    margin-top: 3vw;
+    font-size: 10px;
+  }
+  .activities {
+    min-width: 100%;
+    min-height: 35vh;
+  }
+  .containerActi{
+    min-width: 100vw;
+  }
+  .actiImg{
+    margin: 1vw;
+    min-width: 30vw;
+    max-height: 20vh
+  }
+  .actiImg p {
+    height:20%;
+    font-size: 9px;
+    width: 100%;
+  }
+  .comments{
+    min-width: 90%;
+
+  }
+  .form {
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 10vw;
+  }
+
+    
+
+}
 
 
 

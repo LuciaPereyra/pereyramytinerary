@@ -2,27 +2,31 @@ import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import authActions from "../redux/actions/authActions"
 
-const Header = (props) => {
-    if (props.usuarioRegistrado) {
+const Header = ({usuarioRegistrado,logoutUser}) => {
+    if (usuarioRegistrado) {
         var links =
             <>
+            <div className="contenedorUser" >
                 <Link to="/login">
                     <div className="user" style={{
-                        backgroundImage: `url(${props.usuarioRegistrado.picture})`,
-                        width: "50px", height: "50px"
+                        backgroundImage: `url(${usuarioRegistrado.urlPic})`,
                     }}></div>
                 </Link>
-                <Link to="/" className="header" style={{
-                    textDecoration: "none"
-                }} onClick={() => props.logoutUser()}><p>LogOut, {props.usuarioRegistrado.userName}</p></Link> 
-                <Link to="/home" style={{
-                    textDecoration: "none"
-                }} ><p> Main </p>
+                <Link to="/" onClick={() => logoutUser()}>
+                    <p>LogOut, {usuarioRegistrado.firstName}</p>
                 </Link>
-                <Link to="/cities" style={{
-                    textDecoration: "none"
-                }}><p>Cities</p>
-                </Link>
+            </div>
+
+                <div className="menuNav">
+                    <Link to="/home" style={{
+                        textDecoration: "none"
+                    }} ><p> Main </p>
+                    </Link>
+                    <Link to="/cities" style={{
+                        textDecoration: "none"
+                    }}><p>Cities</p>
+                    </Link>
+                </div>
             </>
     } else {
         var links =
@@ -30,17 +34,19 @@ const Header = (props) => {
                 <Link to="/login">
                     <div className="user" style={{
                         backgroundImage: `url("./assets/unknowfem.png")`,
-                        width: "50px", height: "50px"
                     }}></div>
                 </Link>
-                <Link to="/home" style={{
-                    textDecoration: "none"
-                }} ><p> Main </p>
-                </Link>
-                <Link to="/cities" style={{
-                    textDecoration: "none"
-                }}><p>Cities</p>
-                </Link>
+                <div className="menuNav">
+                    <Link to="/home" style={{
+                        textDecoration: "none"
+                    }} ><p> Main </p>
+                    </Link>
+                    <Link to="/cities" style={{
+                        textDecoration: "none"
+                    }}><p>Cities</p>
+                    </Link>
+                </div>
+
             </>
     }
     return (
@@ -67,4 +73,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

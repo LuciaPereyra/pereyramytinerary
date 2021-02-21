@@ -35,7 +35,7 @@ const userController = {
         
         return res.json({success: errores.details.length === 0 ? true : false,
                          errores: errores,
-                         response: errores.details.length === 0 && {token,userName:newUserSaved.userName,picture:newUserSaved.urlPic}
+                         response: errores.details.length === 0 && {token,userName:newUserSaved.userName,urlPic:newUserSaved.urlPic,firstname:newUserSaved.firstName}
                         })
                         // una sola respuesta al FE, en base a la validación de errores.details. si es false, mapea errores.details y los envía, tampoco se crea el usuario
                         // el token es lo que se grabará en redux y FE 
@@ -55,7 +55,7 @@ const userController = {
             return res.json({success:false, mensaje: "El Password no coincide"})
         }
         var token = jwt.sign({...userRegistrado},process.env.KEY_SECRET,{})
-        return res.json({success: true, response:{token,userName:userRegistrado.userName, picture:userRegistrado.urlPic}})
+        return res.json({success: true, response:{token, urlPic:userRegistrado.urlPic,firstName:userRegistrado.firstName}})
         // respondo al frontEnd con un objeto que tiene el token, nombre de usuario y foto
 
     },

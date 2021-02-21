@@ -7,7 +7,7 @@ const Slide = ({ item }) => {
 
           <div key={index} className="cajaCarousel" style={{
             backgroundImage: `url(${ciudad.src})`,
-            width: "38vw", height: "40vh"
+            // width: "38vw", height: "40vh"
           }}><p>{ciudad.altText}</p>
           </div>
         )

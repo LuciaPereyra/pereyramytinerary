@@ -19,9 +19,9 @@ const authActions = {
         }
     },
 
-    logFromLocalStorage: (userName,picture,token) =>{
+    logFromLocalStorage: (firstName,urlPic,token) =>{
         return(dispatch,getState) =>{
-            dispatch({type:"USER_LOG",payload:{response:{userName,picture,token}}})
+            dispatch({type:"USER_LOG",payload:{response:{firstName,urlPic,token}}})
 
         }
 
