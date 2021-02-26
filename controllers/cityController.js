@@ -15,7 +15,6 @@ const cityController = {
             .catch(error => {
                 return res.json({ success: false, response: error })
             })
-
     },
 
     allCities: async (req, res) => {
@@ -23,7 +22,6 @@ const cityController = {
         const data = await City.find()
         res.json({
             respuesta: data
-
         })
     },
 

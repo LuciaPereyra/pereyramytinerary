@@ -55,7 +55,7 @@ nav p {
   height: 0 auto;
   font-size: 20px;
   margin: 1vw; 
-  color: rgb(8, 8, 8);
+  color: rgba(8, 8, 8, 0.384);
 }
 
 /* HOME'S ELEMENTS */
