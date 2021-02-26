@@ -13,8 +13,8 @@ app.use(express.json())
 
 app.use("/api", router)
 
-const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT 
+const host = process.env.HOST || '0.0.0.0'
 
 
 
