@@ -1,11 +1,11 @@
 const User = require("../models/User")
 const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-
+//urlPic,country
 const userController = {
     signUp: async (req, res) => {
      var errores={details:[]}
-     const { userName,firstName,lastName,email,password, urlPic,country} = req.body
+     const { userName,firstName,lastName,email,password} = req.body
      
      const userRegistrado = await User.findOne({userName: userName}) // findOne devuelve un objeto con todos los usuarios, si no existe devuelve: Null
      // valida username, busco en mi DB a traves del modelo, algún usuario cuyo UserName (propiedad de DB) sea el userName (userName que envía el usuario) 
@@ -21,7 +21,7 @@ const userController = {
            //    método p/hashear toma dos param, un "string"(es el pass que quiero hashear) y los solt: x default se pone 10 (nivel de hasheo)
     
             var newUser = new User ({
-                userName,firstName,lastName,email,urlPic,password: passHasheado,country 
+                userName,firstName,lastName,email,password: passHasheado
            }) // nueva instancia de usuario
            
             var newUserSaved = await newUser.save() // gravo usuario nuevo
@@ -35,7 +35,7 @@ const userController = {
         
         return res.json({success: errores.details.length === 0 ? true : false,
                          errores: errores,
-                         response: errores.details.length === 0 && {token,userName:newUserSaved.userName,urlPic:newUserSaved.urlPic,firstname:newUserSaved.firstName}
+                         response: errores.details.length === 0 && {token,userName:newUserSaved.userName,firstname:newUserSaved.firstName}
                         })
                         // una sola respuesta al FE, en base a la validación de errores.details. si es false, mapea errores.details y los envía, tampoco se crea el usuario
                         // el token es lo que se grabará en redux y FE 
