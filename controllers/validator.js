@@ -8,8 +8,8 @@ const validator = {
             lastName: Joi.string().trim().required().min(2).max(10),
             email: Joi.string().trim().required().email({minDomainSegments: 1, tlds: {allow: false} }),
             password: Joi.string().trim().required(), // PASS: LMAYUSC, LMINUSC,N0-9,3,8CARAC
-            urlPic: Joi.string().uri().required(),
-            country: Joi.string().required()
+            // urlPic: Joi.string().uri().required(),
+            // country: Joi.string().required()
         })
 
         const validation = schema.validate(req.body, {abortEarly:false})

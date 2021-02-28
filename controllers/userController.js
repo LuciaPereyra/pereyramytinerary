@@ -43,6 +43,7 @@ const userController = {
 
 
     logIn: async (req,res) => {
+        console.log(req)
         const {userName, password} = req.body
         const userRegistrado = await User.findOne({userName:userName}) // primero verifica que el usuario exista, 
         if (!userRegistrado) {
@@ -55,7 +56,7 @@ const userController = {
             return res.json({success:false, mensaje: "El Password no coincide"})
         }
         var token = jwt.sign({...userRegistrado},process.env.KEY_SECRET,{})
-        return res.json({success: true, response:{token, urlPic:userRegistrado.urlPic,firstName:userRegistrado.firstName}})
+        return res.json({success: true, response:{token,firstName:userRegistrado.firstName, userName:userRegistrado.userName}})
         // respondo al frontEnd con un objeto que tiene el token, nombre de usuario y foto
 
     },
