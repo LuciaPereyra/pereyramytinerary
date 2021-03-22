@@ -3,7 +3,7 @@ import axios from "axios"
 const itineraryActions = {
     itinerariesById: (id) => {
         return async (dispatch, getState) => {
-            const data = await axios.get("http://localhost:4000/api/itinerary/"+ id)
+            const data = await axios.get("https://mytineraryy.herokuapp.com/api/itinerary/"+ id)
             dispatch({type:"ALL_ITINERARIES", payload: data.data.respuesta})
         }
     },
@@ -11,7 +11,7 @@ const itineraryActions = {
     favItinerary: (id, token) => {
         return async (dispatch, getState) => {
           try {
-            const data = await axios.post(`http://localhost:4000/api/itinerary/like/${id}`, {token}, 
+            const data = await axios.post(`https://mytineraryy.herokuapp.com/api/itinerary/like/${id}`, {token}, 
             { headers: { Authorization: `Bearer ${token}` }})
             dispatch({type: 'FAV_ITINERARY', payload: data.data.respuesta})
           } catch (error) {
@@ -23,7 +23,7 @@ const itineraryActions = {
       unfavItinerary: (id, token) => {
         return async (dispatch, getState) => {
           try {
-            const data = await axios.post(`http://localhost:4000/api/itinerary/unlike/${id}`, {token}, 
+            const data = await axios.post(`https://mytineraryy.herokuapp.com/api/itinerary/unlike/${id}`, {token}, 
             { headers: { Authorization: `Bearer ${token}`}})
             dispatch({type: 'FAV_ITINERARY', payload: data.data.respuesta})
           } catch (error) {
@@ -36,7 +36,7 @@ const itineraryActions = {
         return async (dispatch, getState) => {
             const token = getState().auth.usuarioRegistrado ? getState().auth.usuarioRegistrado.token : ""
             try{
-                const data = await axios.put(`http://localhost:4000/api/itinerary`,{id,comment}, {
+                const data = await axios.put(`https://mytineraryy.herokuapp.com/api/itinerary`,{id,comment}, {
                     headers: {
                         Authorization:"Bearer " + token
                     }

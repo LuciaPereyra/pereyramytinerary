@@ -6,7 +6,7 @@ const citiesActions = {
     allCities: () => {
         return async (dispatch, getState) => {
             // ejecuta código async y termina despachando la acción 
-           const data = await axios.get("http://localhost:4000/api/cities")
+           const data = await axios.get("https://mytineraryy.herokuapp.com/api/cities")
            dispatch({type: "ALL_CITIES", payload:data.data.respuesta})
         }
 

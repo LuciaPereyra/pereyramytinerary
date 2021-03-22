@@ -4,7 +4,7 @@ const authActions = {
 
     registerUser: (newCount) => {
         return async (dispatch, getState) => {
-            const data = await axios.post("http://localhost:4000/api/user/signup", newCount)
+            const data = await axios.post("https://mytineraryy.herokuapp.com/api/user/signup", newCount)
             if (!data.data.success) {
                 return data.data
             }// si no pasa de acá, la acción no se despacha
@@ -32,7 +32,7 @@ const authActions = {
         return async (dispatch, getState) => { 
             const token = getState().usuarioRegistrado ? getState().usuarioRegistrado.token : ""
             try {
-                const data = await axios.post("http://localhost:4000/api/user/login", logueo, {
+                const data = await axios.post("https://mytineraryy.herokuapp.com/api/user/login", logueo, {
                     headers: {
                         Authorization: "Bearer " + token
                     }

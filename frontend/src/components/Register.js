@@ -13,8 +13,6 @@ const Register = (props) => {
     })
     const [err, setErr] = useState([])
 
-
-
     const capturaInputRegister = e => {
         const valor = e.target.value
         const campo = e.target.name

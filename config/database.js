@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
 //conexión a base de datos, siempre es async
 mongoose.connect(process.env.MONGODB, {
@@ -9,5 +9,5 @@ mongoose.connect(process.env.MONGODB, {
 
 })
     .then(() => console.log("Database connected"))
-    .catch(error => console.log(error)) // catcheo error y lo imprimo. 
+    .catch(error => console.log("Error "+error)) // catcheo error y lo imprimo. 
 

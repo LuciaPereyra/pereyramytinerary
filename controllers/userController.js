@@ -58,7 +58,6 @@ const userController = {
         var token = jwt.sign({...userRegistrado},process.env.KEY_SECRET,{})
         return res.json({success: true, response:{token,firstName:userRegistrado.firstName, userName:userRegistrado.userName}})
         // respondo al frontEnd con un objeto que tiene el token, nombre de usuario y foto
-
     },
 
 }
