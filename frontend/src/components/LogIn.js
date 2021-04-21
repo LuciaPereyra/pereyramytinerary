@@ -3,11 +3,12 @@ import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import authActions from "../redux/actions/authActions"
 import GoogleLogin from 'react-google-login'
+import { FaEye } from "react-icons/fa";
 
-const LogIn = ({loginUser}) => {
+const LogIn = ({ loginUser }) => {
     const [logueo, setLogueo] = useState({})
     const [err, setErr] = useState([])
-
+    const [hidden, setHidden] = useState(true)
 
     const capturaInputLogIn = e => {
         const valor = e.target.value
@@ -17,53 +18,57 @@ const LogIn = ({loginUser}) => {
             [campo]: valor
         })
     }
-
-
+    const enterKeyboard = e => {
+        //El numero 13 seria la tecla enter, si fue presionada envio la validacion
+        //como si fuera el boton sign in
+        if (e.charCode === 13) {
+            validaGo(e)
+        }
+    }
     const validaGo = async e => {
         e.preventDefault()
         if (logueo.userName === "" || logueo.pasword === "") {
-            alert("Completar todos los campos con (*)")
+            alert("Complete all fields")
             return false
         }
         setErr([])
-        const responseBe = await loginUser(logueo)
+        const response = await loginUser(logueo)
         // paso la nueva cuenta a través de la función registerUser que despacha mi userAction
-        if (responseBe && !responseBe.success) {
-            setErr([responseBe.mensaje])
+        if (response && !response.success) {
+            setErr([response.mensaje])
         } else {
-            alert("Bienvenido/a" + " " + logueo.userName)
-       
+            alert(`Hi ${logueo.userName} !`, 3000)
         }
-
     }
     const responseGoogle = async (response) => {
         if (response.error) {
-            alert("Hubo un error con la autenticación en Google")
+            console.log(response.error)
+            alert('Error in Google authentication', 3000)
         } else {
-            const responseBe = await loginUser({
+            const response = await loginUser({
                 userName: response.profileObj.email,
-                password: response.profileObj.googleId,
+                password: `Aa${response.profileObj.googleId}`,
+                google: 'true'
             })
 
-            if (responseBe && !responseBe.success) {
-                setErr([responseBe.mensaje])
+            if (response && !response.success) {
+                setErr([response.mensaje])
             } else {
-                alert("Bienvenido/a ")
+                alert(`Hi${logueo.userName} !`, 3000)
             }
         }
     }
 
-
     return (
+        <div className="formContainer">
         <div className="form">
             <h1>LOGIN</h1>
             <input type="text" name="userName" placeholder="UserName (*)" onChange={capturaInputLogIn} />
-            <input type="password" name="password" placeholder="Password (*)" onChange={capturaInputLogIn} />
-            <button onClick={validaGo}>GO!</button>
-
-            <div className="form">
-                {err.map(error => <h2>{error}</h2>)}
+            <div className="inputDiv">
+                <input onKeyPress={enterKeyboard} type={hidden ? "password" : " text"} name="password" placeholder="Password" onChange={capturaInputLogIn} />
+                < FaEye className="eye" onClick={() => setHidden(!hidden)} />
             </div>
+            <button onClick={validaGo}>GO!</button>
             <GoogleLogin
                 clientId="754177178799-o1hb0r394koiniduanlj695jlpec4gvg.apps.googleusercontent.com"
                 buttonText="Sign in with Google"
@@ -73,25 +78,13 @@ const LogIn = ({loginUser}) => {
             />
             <p>Don't have account? Create one here!</p>
             <Link to="/signup"> <p>Create Account</p></Link>
-
         </div>
-
-
+        </div>
     )
-
-
-
-}
-const mapStateToProps = state => {
-    return {
-        usuarioLogueado: state.auth.usuarioRegistrado
-    }
 }
 
 const mapDispatchToProps = {
     loginUser: authActions.loginUser
 }
 
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn)
+export default connect(null, mapDispatchToProps)(LogIn)

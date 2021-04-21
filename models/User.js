@@ -8,11 +8,8 @@ const userSchema = new mongoose.Schema({
     password: String,
     urlPic: String,
     country: String
-
 })
 
 const User = mongoose.model("user", userSchema)
-
-
 
 module.exports = User

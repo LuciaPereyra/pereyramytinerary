@@ -1,11 +1,11 @@
 const express = require("express")
 const router = express.Router()
+require('../config/passport')
+const passport = require('passport')
 const cityController = require("../controllers/cityController")
 const itineraryController = require("../controllers/itineraryController")
 const userController = require("../controllers/userController")
 const validator = require("../controllers/validator")
-const passport = require("passport")
-require("../config/passport")
 
 
 router.route("/cities") 
@@ -18,7 +18,8 @@ router.route("/city/:id")
 router.route("/itinerary")
 .get(itineraryController.allItineraries)
 .post(itineraryController.addItinerary)
-.put(passport.authenticate("jwt",{session:false}),itineraryController.postComment)
+.put(passport.authenticate("jwt",{session:false}),itineraryController.addComment)
+
 
 router.route("/itinerary/:id")
 .get(itineraryController.itinerariesById)
@@ -30,19 +31,10 @@ router.route("/user/signup")
 router.route("/user/login")
 .post(userController.logIn)
 
-router.route('/itinerary/like/:itineraryid')
-.post(passport.authenticate("jwt",{session:false}),itineraryController.addFav)
+router.route('/itinerary/like/:id')
+.put(passport.authenticate("jwt",{session:false}),itineraryController.addFav)
 
-router.route('/itinerary/unlike/:itineraryid')
-.post(passport.authenticate("jwt",{session:false}),itineraryController.modifyFav)
-
-
-
-
-
-
+router.route('/itinerary/unlike/:id')
+.put(passport.authenticate("jwt",{session:false}),itineraryController.unFav)
 
 module.exports = router 
-
-// Método GET, es un pedido, lleva los datos de forma "visible" al navegador web (cliente) por medio de la URL.
-// Método POST, responde al pedido de forma "oculta" (el cliente no lo puede ver) en base a lo que responde el controlador de origen. 

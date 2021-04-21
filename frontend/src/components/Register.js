@@ -2,21 +2,39 @@ import { connect } from "react-redux"
 import { useState } from "react"
 import authActions from "../redux/actions/authActions"
 import GoogleLogin from 'react-google-login'
+import { FaEye } from "react-icons/fa";
+import { Link } from "react-router-dom"
 
 
-const paises = ["Argentina", "Brasil", "Uruguay", "Perú", "Alemania", "Canadá"]
+const countries = require('../data/dataContryNames.json')
 
-const Register = (props) => {
+const Register = ({ registerUser }) => {
 
-    const [newCount, setCount] = useState({
-        userName: "", password:"", firstName:"", email:""
+    const [newCount, setNewCount] = useState({
+        firstName: '',
+        lastName: '',
+        userName: '',
+        email: '',
+        password: '',
+        country: '',
+        google: 'false'
     })
-    const [err, setErr] = useState([])
+    const [errores, setErrores] = useState([])
+    const [hidden, setHidden] = useState(true)
+
+    const failedInputs = {
+        firstName: null,
+        lastName: null,
+        email: null,
+        password: null,
+        country: null,
+        useremailExist: null
+    }
 
     const capturaInputRegister = e => {
         const valor = e.target.value
         const campo = e.target.name
-        setCount({
+        setNewCount({
             ...newCount,
             [campo]: valor
         })
@@ -24,91 +42,97 @@ const Register = (props) => {
 
     const validaInputRegister = async e => {
         e.preventDefault()// previene que no recargue página
-        if (newCount.userName === "" || newCount.firstName === "" || newCount.email === "" || newCount.password === "") {
-            alert("Todos los campos son obligatorios para continuar")
+        if (newCount.firstName === '' || newCount.lastName === '' || newCount.userName === '' || newCount.email === '' || newCount.password === '' || newCount.country === '') {
+            alert('Complete all fields', 3000)
             return false
             // se va de la función y no sigue
         }
-
-        setErr([])
-        const responseBE = await props.registerUser(newCount)
+        setErrores([])
+        const response = await registerUser(newCount)
         // paso la nueva cuenta a través de la función registerUser que despacha mi userAction
-        if (responseBE && !responseBE.success) {
-            setErr(responseBE.errores.details)
-        } else {
-            alert("Usuario creado")
+        if (response && !response.success) {
+            response.response.map(error => {
+                failedInputs[error.label] = error.message
+                return false
+            })
+            setErrores(failedInputs)
         }
-
     }
+
     const responseGoogle = async (response) => {
         if (response.error) {
-            alert("Hubo un error con la autenticación en Google")
+            alert('Error in Google authentication', 3000)
         } else {
-            const responseBE = await props.registerUser({
-                userName: response.profileObj.email,
+            const response = await registerUser({
                 firstName: response.profileObj.givenName,
                 lastName: response.profileObj.familyName,
+                userName: response.profileObj.email,
                 email: response.profileObj.email,
-                password: response.profileObj.googleId,
+                password: `Aa${response.profileObj.googleId}`,
                 urlPic: response.profileObj.imageUrl,
-                country: response.profileObj.givenName
+                country: 'Argentina',
+                google: 'true'
             })
-            if (responseBE && !responseBE.success) {
-                setErr(responseBE.errores.details)
+            if (response && !response.success) {
+                setErrores(response.errores.details)
             } else {
-                alert("Usuario creado")
+                alert('Create account', 3000)
             }
+        }
+    }
+    const pressEnter = (e) => {
+        if (e.key === 'Enter') {
+            validaInputRegister()
         }
     }
 
 
     return (
-        <div className="form">
+        <div className="formContainer">
             <h1>Create Account</h1>
-            <input type="text" name="firstName" placeholder="FirstName (*)" onChange={capturaInputRegister} />
-            <input type="text" name="lastName" placeholder="LastName" onChange={capturaInputRegister} />
-            <input type="text" name="userName" placeholder="UserName (*)" onChange={capturaInputRegister} />
-            <input type="text" name="email" placeholder="Email (*)" onChange={capturaInputRegister} />
-            <input type="password" name="password" placeholder="Password (*)" onChange={capturaInputRegister} />
-            <input type="text" name="urlPic" placeholder="Picture (*)" onChange={capturaInputRegister} />
-            <select onChange={capturaInputRegister} name="country">
-                <option value="" disabled selected>Select Country</option>
-                {paises.map(pais => {
-                    return (
-                        <option value={pais}>{pais}</option>
-                    )
-                })}
-            </select>
-
-            <button onClick={validaInputRegister}>Register</button>
-            <p>Do you have a registered Google account?</p>
-            <GoogleLogin
-                clientId="754177178799-o1hb0r394koiniduanlj695jlpec4gvg.apps.googleusercontent.com"
-                buttonText="Sign in with Google"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={'single_host_origin'}
-            />
             <div className="form">
-                {err.map(error => <h2>{error.message}</h2> )} 
-                
- 
-            </div>    
+
+                <small>{errores.firstName}</small>
+                <input type="text" name="firstName" placeholder="FirstName " onChange={capturaInputRegister} />
+                <small>{errores.lastName}</small>
+                <input type="text" name="lastName" placeholder="LastName" onChange={capturaInputRegister} />
+                <small>{errores.userName || errores.useremailExist}</small>
+                <input type="text" name="userName" placeholder="UserName" onChange={capturaInputRegister} />
+                <small>{errores.email}</small>
+                <input type="text" name="email" placeholder="Email" onChange={capturaInputRegister} />
+                <div className="inputDiv">
+                    <small>{errores.password}</small>
+                    <input type="password" name="password" placeholder="Password" type={hidden ? 'password' : 'text'} onKeyDown={pressEnter} onChange={capturaInputRegister} />
+                    < FaEye className="eye" onClick={() => setHidden(!hidden)} />
+                </div>
+                <small>{errores.urlPic}</small>
+                <input type="text" name="urlPic" placeholder="Picture" onChange={capturaInputRegister} />
+                <select onChange={capturaInputRegister} name="country">
+                    <option value='' disabled selected>Select Country</option>
+                    {countries.map((country, i) => {
+                        return (
+                            <option key={i} value={country.value}>{country.label}</option>
+                        )
+                    })}
+                </select>
+
+                <button onClick={validaInputRegister}>Register</button>
+                <Link to="/login"> <p>Do you have a registered Google account?</p></Link>
+                <GoogleLogin
+                    clientId="754177178799-o1hb0r394koiniduanlj695jlpec4gvg.apps.googleusercontent.com"
+                    buttonText='Sign in with Google'
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
+            </div>
 
         </div>
     )
-    // errores del validator, se cae la app
-    // otro error es que cuando genera nuevo usuario desde google se rompe todo :(
-
-    // esto debe enviarse a la DB
-
 }
 
-const mapStateToProps = state => {
-    return {
-        usuarioRegistrado: state.auth.usuarioRegistrado
-    }
-}
+
+
 
 const mapDispatchToProps = {
     registerUser: authActions.registerUser
@@ -116,4 +140,4 @@ const mapDispatchToProps = {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(null, mapDispatchToProps)(Register)

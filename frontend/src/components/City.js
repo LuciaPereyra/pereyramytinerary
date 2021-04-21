@@ -7,21 +7,27 @@ import itineraryActions from "../redux/actions/itineraryActions"
 
 export const City = (props) => { // props URL 
 
+    const { listaCities, listItineraries, itinerariesById } = props
+
     const [city, setCity] = useState([])
     const id = props.match.params.id// captura id que le pasan por url (cuando hacen click en la foto)
 
     useEffect(() => {
-        const cityFind = props.listaCities.find(item => item._id === id)
-        setCity(cityFind) 
-        props.itinerariesById(id)
+        const cityFind = listaCities.find(item => item._id === id)
+        setCity(cityFind)
+        itinerariesById(id)
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        })
+        listaCities.length === 0 && props.history.push('/cities')
     }, [])
 
 
 
     return (
-        <section className="section" style={{
-            backgroundImage: `url("../assets/fondoacua.jpg")`
-        }}>
+        <section className="section" >
             <div className="contenedorCity">
                 <div className="cityImage" style={{
                     backgroundImage: `url("${city.cityPic}")`
@@ -29,22 +35,22 @@ export const City = (props) => { // props URL
                 </div>
                 <h5 className="titleAvailable">Available MYtineraries: </h5>
 
-                {(props.listItineraries.length === 0) ?
+                {(listItineraries.length === 0) ?
 
                     <div className="alert" style={{
                         backgroundImage: `url("../assets/fondoHuellas.jpg"`,
                         width: "40vw", height: "40vh"
-                    }}>  <div className="alertTitle"> <p>Oops! we don't have itineraries to show yet</p></div>
+                    }}>  <div className="alertTitle"> <p>Oops! there are no itineraries to show</p></div>
                     </div>
 
                     : <div className="itinerary">
-                        {props.listItineraries.map(itineraries => <Itinerary key={itineraries._id}itineraries={itineraries} id={id} />)}
+                        {listItineraries.map(itineraries => <Itinerary key={itineraries._id} itineraries={itineraries} id={id} />)}
 
                     </div>
                 }
 
                 <Link className="linkItineraries" to="/cities"
-                    style={{ textDecoration: "none" }}> <img src="../assets/Arrowleft.png" alt=""/>Back to Cities!
+                    style={{ textDecoration: "none" }}> <img src="../assets/Arrowleft.png" alt="" />Back to Cities!
                 </Link>
             </div>
         </section>
@@ -61,11 +67,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(City)
-
-// paso las props propias del componente Itineraries, todas las url las tienen
- // el id que llega a las props es el indicado en el Route
-
-//  data.map(info => { // mapeo data 
-// if (info._id === id) { // comparo el _id de cada objeto dentro de mi array con el id que me pasan por url
-//     setItinerary(info) // carga resultado al valor de var itinerary por medio de la funcion 
-// }

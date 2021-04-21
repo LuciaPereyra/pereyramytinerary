@@ -103,7 +103,7 @@ const Carousell = () => {
   });
 
 
-  return ( // acá llamamos al componente carousel 
+  return ( 
     <>
       <Carousel
         activeIndex={activeIndex}

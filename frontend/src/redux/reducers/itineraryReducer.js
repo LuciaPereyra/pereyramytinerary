@@ -1,29 +1,27 @@
 const initialState = {
     listaItinerarios: [],
-    comentario:[]
-   
 }
 
 const itineraryReducer = (state = initialState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case "ALL_ITINERARIES":
             return {
                 ...state,
-                listaItinerarios:action.payload
+                listaItinerarios: action.payload
             }
-            case "ITIN_COMMENT":
-                return{
-                    ...state,
-                    comentario:action.payload
-                }
-                case 'FAV_ITINERARY':
-                    return {
-                      ...state,
-                      itinerary: action.payload
-                    }
+        case "ITIN_COMMENT":
+            return {
+                ...state,
+                listaItinerarios: state.listaItinerarios.map(comment => comment._id === action.payload._id ? action.payload : comment),
+            }
+        case 'FAV_ITINERARY':
+            return {
+                ...state,
+                itinerary: action.payload
+            }
         default:
-            return state 
-    } 
+            return state
+    }
 
 }
 

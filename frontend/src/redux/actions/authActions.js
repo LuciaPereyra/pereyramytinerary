@@ -1,14 +1,47 @@
 import axios from "axios"
 
 const authActions = {
-
     registerUser: (newCount) => {
         return async (dispatch, getState) => {
-            const data = await axios.post("https://mytineraryy.herokuapp.com/api/user/signup", newCount)
-            if (!data.data.success) {
-                return data.data
-            }// si no pasa de acá, la acción no se despacha
-            dispatch({ type: "USER_LOG", payload: data.data })
+            try {
+                const data = await axios.post("http://localhost:4000/api/user/signup", newCount)
+                console.log(data)
+                if (data.data.success === false) {
+                    var errors = []
+                    data.data.errores && data.data.errores.details.map(error => {
+                        switch (error.path[0]) {
+                            case 'firstName':
+                                errors.push({ label: error.context.label, message: "The Firstname must have a minimum of 2 characters and a maximum of 10 characters" })
+                                break;
+                            case 'lastName':
+                                errors.push({ label: error.context.label, message: "The Lastname must have a minimum of 2 characters and a maximum of 10 characters" })
+                                break;
+                            case 'userName':
+                                errors.push({ label: error.context.label, message: "The Username must match your email" })
+                                break;
+                            case 'email':
+                                errors.push({ label: error.context.label, message: "The email must contain at least one at and one domain" })
+                                break;
+                            case 'password':
+                                errors.push({ label: error.context.label, message: "The password must have at least 6 to 8 characters and an uppercase and a lowercase letter" })
+                                break;
+                            case 'country':
+                                errors.push({ label: error.context.label, message: "You must select a country" })
+                                break;
+                            case 'useremailExist':
+                                errors.push({ label: error.context.label, message: "La derección de mail ya está registrada" })
+                                break;
+                            default:
+                                return false
+                        }
+                        return false
+                    })
+                }// si no pasa de acá, la acción no se despacha
+                dispatch({ type: "USER_LOG", payload: data.data })
+                alert('Create account')
+            } catch (err) {
+                return ({ success: false, response: errors })
+            }
         }
     },
 
@@ -16,28 +49,24 @@ const authActions = {
         // limpia estado de redux cuando se desloguea
         return (dispatch, getState) => {
             dispatch({ type: "LOG_OUT" })
+            alert('See you letter!')
         }
     },
 
-    logFromLocalStorage: (firstName,urlPic,token) =>{
-        return(dispatch,getState) =>{
-            dispatch({type:"USER_LOG",payload:{response:{firstName,urlPic,token}}})
-
+    logFromLocalStorage: (firstName, urlPic, token, idUser) => {
+        return (dispatch, getState) => {
+            dispatch({ type: "USER_LOG", payload: { response: { firstName, urlPic, token, idUser } } })
         }
-
     },
-
     loginUser: (logueo) => {
-
-        return async (dispatch, getState) => { 
+        return async (dispatch, getState) => {
             const token = getState().usuarioRegistrado ? getState().usuarioRegistrado.token : ""
             try {
-                const data = await axios.post("https://mytineraryy.herokuapp.com/api/user/login", logueo, {
+                const data = await axios.post("http://localhost:4000/api/user/login", logueo, {
                     headers: {
                         Authorization: "Bearer " + token
                     }
                 })
-   
                 if (!data.data.success) {
                     return data.data
                 }// si no pasa de acá, la acción no se despacha
@@ -46,43 +75,8 @@ const authActions = {
                 if (err.response.status === 401) {
                     alert("No está autorizado a crear nuevo usuario")
                 }
-                // error 401 unauthorized 
-                // esto se mudará a comments, el passport protegerá eso. 
             }
         }
-
     },
-    // itineraryComment:(comment,id)=>{
-    //     return async (dispatch, getState) => {
-    //         console.log(getState().usuarioRegistrado)
-    //         const token = getState().usuarioRegistrado ? getState().usuarioRegistrado.token : ""
-
-    //         try{
-    //             const data = await axios.post("http://localhost:4000/api/itinerary/comment/",{comment},+id, {
-    //             headers: {
-    //                 Authorization:"Bearer " + token
-    //             }
-    //         })
-
-    //         if(!data.data.respuesta.success) {
-    //             return data.data.respuesta
-    //         }
-
-    //         dispatch({type:"USER_LOG", payload: data.data.respuesta})
-    //         }catch (err) {
-    //             if (err.respuesta === 401) {
-    //                 alert("No está autorizado a crear nuevo usuario")
-    //             }
-    //             // error 401 unauthorized 
-    //             // esto se mudará a comments, el passport protegerá eso. 
-    //         }
-            
-    //     }
-
-    // }
 }
-        export default authActions
-
-// newCount viaja al backend, entra a la ruta asignada con método post, consulta al controlador de origen, aplica middleware: destructura body y valida,
-// si todo ok dara respuesta con success, errores que LLEGARÁ AL FRONT en la PAYLOAD, como respuesta.data (en axios respuesta viene dentro de prop data)
-// si pasa evaluación de ACTIONS, viaja al reducer 
+export default authActions

@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const itinerarySchema = new mongoose.Schema({
     cityId: {type: mongoose.Schema.ObjectId, ref: "city"},
     title: {type: String, required:true},
-    userName:{type:String, required:true},
+    userName:{type: String, required:true},
     userPic: {type:String, required:true},
     likes: {type: Array, default: []},
     hours: {type:Number, required:true},
@@ -16,9 +16,9 @@ const itinerarySchema = new mongoose.Schema({
     }],
  
     comments:[{
-        userPic:{type:String, required:false},
-        userName:{type:String, required:false},
-        comment:{type:String, required:false} 
+        userPic:{type:String, required:true},
+        userName:{type:String, required:true},
+        comment:{type:String, required:true} 
     }]
     
 }) // acá defino mi Schema (molde)

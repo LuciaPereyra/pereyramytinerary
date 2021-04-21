@@ -1,5 +1,4 @@
 import axios from "axios"
-// las acciones de cities vivirán en una función que retorna las acciones las cuales se ejecutarán en el reducer
 
 const citiesActions = {
     
